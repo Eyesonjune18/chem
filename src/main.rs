@@ -1,11 +1,17 @@
 #![allow(dead_code)]
 
+mod constants;
+mod equations;
+
 use std::io::{stdin, stdout, Write};
 
-const SPEED_OF_LIGHT: f64 = 2.998e8;
-const AVOGADRO: f64 = 6.022e23;
-const PLANCK: f64 = 6.626e-34;
-const RYDBERG: f64 = -2.178e-18;
+use equations::{
+    calculate_electronic_transition_energy,
+    calculate_frequency_from_wavelength,
+    calculate_threshold_frequency,
+    calculate_wavelength_from_frequency,
+    calculate_work_function,
+};
 
 fn main() {
     // Give the user a menu of calculations to choose from
@@ -72,31 +78,6 @@ fn prompt_frequency_from_wavelength() {
     let frequency = calculate_frequency_from_wavelength(wavelength);
 
     println!("The frequency is {:.1$e} Hz", frequency, significant_figures);
-}
-
-// Given two electron energy levels (n and m), calculates the energy released (in J)
-fn calculate_electronic_transition_energy(n: i32, m: i32) -> f64 {
-    RYDBERG * (1.0 / (n * n) as f64 - 1.0 / (m * m) as f64)
-}
-
-// Given a work function (in J/mol), calculates the threshold frequency of a photoelectric effect
-fn calculate_threshold_frequency(w: f64) -> f64 {
-    w / PLANCK
-}
-
-// Given a threshold frequency (in Hz), calculates the work function of a photoelectric effect
-fn calculate_work_function(f: f64) -> f64 {
-    f * PLANCK
-}
-
-// Given a frequency (in Hz), calculates the wavelength (in m)
-fn calculate_wavelength_from_frequency(f: f64) -> f64 {
-    SPEED_OF_LIGHT / f
-}
-
-// Given a wavelength (in m), calculates the frequency (in Hz)
-fn calculate_frequency_from_wavelength(l: f64) -> f64 {
-    SPEED_OF_LIGHT / l
 }
 
 fn read_i32(prompt: &str) -> i32 {
