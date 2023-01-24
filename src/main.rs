@@ -11,6 +11,8 @@ use equations::{
     calculate_threshold_frequency,
     calculate_wavelength_from_frequency,
     calculate_work_function,
+    calculate_energy_from_frequency,
+    calculate_energy_from_wavelength,
 };
 
 fn main() {
@@ -29,6 +31,8 @@ fn main() {
         3 => prompt_work_function(),
         4 => prompt_wavelength_from_frequency(),
         5 => prompt_frequency_from_wavelength(),
+        6 => prompt_energy_from_frequency(),
+        7 => prompt_energy_from_wavelength(),
         _ => println!("Invalid choice!"),
     }
 }
@@ -78,6 +82,24 @@ fn prompt_frequency_from_wavelength() {
     let frequency = calculate_frequency_from_wavelength(wavelength);
 
     println!("The frequency is {:.1$e} Hz", frequency, significant_figures);
+}
+
+fn prompt_energy_from_frequency() {
+    let frequency = read_f64("Enter the frequency (in Hz): ");
+    let significant_figures = prompt_sigfigs();
+
+    let energy = calculate_energy_from_frequency(frequency);
+
+    println!("The energy is {:.1$e} J", energy, significant_figures);
+}
+
+fn prompt_energy_from_wavelength() {
+    let wavelength = read_f64("Enter the wavelength (in m): ");
+    let significant_figures = prompt_sigfigs();
+
+    let energy = calculate_energy_from_wavelength(wavelength);
+
+    println!("The energy is {:.1$e} J", energy, significant_figures);
 }
 
 fn prompt_sigfigs() -> usize {

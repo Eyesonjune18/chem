@@ -21,6 +21,16 @@ pub fn calculate_wavelength_from_frequency(f: f64) -> f64 {
 }
 
 // Given a wavelength (in m), calculates the frequency (in Hz)
-pub fn calculate_frequency_from_wavelength(l: f64) -> f64 {
-    SPEED_OF_LIGHT / l
+pub fn calculate_frequency_from_wavelength(λ: f64) -> f64 {
+    SPEED_OF_LIGHT / λ
+}
+
+// Given a frequency (in Hz), calculates the energy (in J)
+pub fn calculate_energy_from_frequency(f: f64) -> f64 {
+    PLANCK * f
+}
+
+// Given a wavelength (in m), calculates the energy (in J)
+pub fn calculate_energy_from_wavelength(λ: f64) -> f64 {
+    PLANCK * SPEED_OF_LIGHT / λ
 }
