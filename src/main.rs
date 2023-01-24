@@ -2,10 +2,10 @@
 
 use std::io::{stdin, stdout, Write};
 
-const RYDBERG: f64 = -2.178e-18;
-const PLANCK: f64 = 6.626e-34;
-const AVOGADRO: f64 = 6.022e23;
 const SPEED_OF_LIGHT: f64 = 2.998e8;
+const AVOGADRO: f64 = 6.022e23;
+const PLANCK: f64 = 6.626e-34;
+const RYDBERG: f64 = -2.178e-18;
 
 fn main() {
     // Give the user a menu of calculations to choose from
