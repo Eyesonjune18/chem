@@ -9,16 +9,13 @@ const RYDBERG: f64 = -2.178e-18;
 
 fn main() {
     // Give the user a menu of calculations to choose from
-    println!("Choose a calculation to perform:");
     println!("1. Calculate energy release from electronic transition");
     println!("2. Calculate threshold frequency from work function");
     println!("3. Calculate work function from threshold frequency");
     println!("4. Calculate wavelength from frequency");
     println!("5. Calculate frequency from wavelength");
 
-    let mut choice = String::new();
-    stdin().read_line(&mut choice).expect("Failed to read line");
-    let choice: i32 = choice.trim().parse().expect("Please type a number!");
+    let choice = read_i32("Enter selection: ");
 
     match choice {
         1 => prompt_electronic_transition_energy(),
