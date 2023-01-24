@@ -22,6 +22,8 @@ fn main() {
     println!("3. Calculate work function from threshold frequency");
     println!("4. Calculate wavelength from frequency");
     println!("5. Calculate frequency from wavelength");
+    println!("6. Calculate energy from frequency");
+    println!("7. Calculate energy from wavelength");
 
     let choice = read_i32("Enter selection: ");
 
