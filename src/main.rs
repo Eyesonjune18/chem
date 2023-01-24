@@ -36,7 +36,7 @@ fn main() {
 fn prompt_electronic_transition_energy() {
     let n = read_i32("Enter the first energy level (n): ");
     let m = read_i32("Enter the second energy level (m): ");
-    let significant_figures = read_usize("Enter the number of significant figures needed: ") - 1;
+    let significant_figures = prompt_sigfigs();
 
     let energy_difference = calculate_electronic_transition_energy(n, m);
 
@@ -46,7 +46,7 @@ fn prompt_electronic_transition_energy() {
 fn prompt_threshold_frequency() {
     // ! Is this unit correct?
     let work_function = read_f64("Enter the work function (in J/mol): ");
-    let significant_figures = read_usize("Enter the number of significant figures needed: ") - 1;
+    let significant_figures = prompt_sigfigs();
 
     let threshold_frequency = calculate_threshold_frequency(work_function);
 
@@ -55,7 +55,7 @@ fn prompt_threshold_frequency() {
 
 fn prompt_work_function() {
     let threshold_frequency = read_f64("Enter the threshold frequency (in Hz): ");
-    let significant_figures = read_usize("Enter the number of significant figures needed: ") - 1;
+    let significant_figures = prompt_sigfigs();
 
     let work_function = calculate_work_function(threshold_frequency);
 
@@ -64,7 +64,7 @@ fn prompt_work_function() {
 
 fn prompt_wavelength_from_frequency() {
     let frequency = read_f64("Enter the frequency (in Hz): ");
-    let significant_figures = read_usize("Enter the number of significant figures needed: ") - 1;
+    let significant_figures = prompt_sigfigs();
 
     let wavelength = calculate_wavelength_from_frequency(frequency);
 
@@ -73,11 +73,15 @@ fn prompt_wavelength_from_frequency() {
 
 fn prompt_frequency_from_wavelength() {
     let wavelength = read_f64("Enter the wavelength (in m): ");
-    let significant_figures = read_usize("Enter the number of significant figures needed: ") - 1;
+    let significant_figures = prompt_sigfigs();
 
     let frequency = calculate_frequency_from_wavelength(wavelength);
 
     println!("The frequency is {:.1$e} Hz", frequency, significant_figures);
+}
+
+fn prompt_sigfigs() -> usize {
+    read_usize("Enter the number of significant figures needed: ") - 1
 }
 
 fn read_i32(prompt: &str) -> i32 {
