@@ -19,9 +19,8 @@ fn main() {
     println!("7. Frequency              -> Energy");
     println!("8. Wavelength             -> Energy");
 
-    let choice = read_i32("Enter selection: ");
+    let choice = read_i32("Enter menu selection: ");
 
-    // ! Significant figures???
     println!("{}", match choice {
         2 => Frequency::from(WorkFunction::prompt()).to_string(),
         3 => Wavelength::from(WorkFunction::prompt()).to_string(),
@@ -30,7 +29,7 @@ fn main() {
         6 => Frequency::from(Wavelength::prompt()).to_string(),
         7 => Energy::from(Frequency::prompt()).to_string(),
         8 => Energy::from(Wavelength::prompt()).to_string(),
-        _ => String::from("Invalid choice!"),
+        _ => String::from("Invalid choice, try again."),
     });
 }
 
