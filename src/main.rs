@@ -4,7 +4,6 @@
 mod constants;
 mod measurement_types;
 mod readers;
-mod equations;
 
 use readers::*;
 use measurement_types::*;
@@ -26,6 +25,7 @@ fn main() {
     println!("{}", match choice {
         2 => Frequency::from(WorkFunction::prompt()).to_string(),
         3 => Wavelength::from(WorkFunction::prompt()).to_string(),
+        4 => WorkFunction::from(Frequency::prompt()).to_string(),
         5 => Wavelength::from(Frequency::prompt()).to_string(),
         6 => Frequency::from(Wavelength::prompt()).to_string(),
         7 => Energy::from(Frequency::prompt()).to_string(),
@@ -42,4 +42,9 @@ fn main() {
 //     let energy_difference = calculate_electronic_transition_energy(n, m);
 
 //     println!("The energy difference between the two energy levels is {:.1$e} J", energy_difference, significant_figures);
+// }
+
+// // Given two electron energy levels (n and m), calculates the energy released (in J)
+// pub fn calculate_electronic_transition_energy(n: i32, m: i32) -> f64 {
+//     constants::RYDBERG * (1.0 / (n * n) as f64 - 1.0 / (m * m) as f64)
 // }

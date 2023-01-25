@@ -199,3 +199,16 @@ impl Display for WorkFunction {
         write!(f, "Work function: {} kJ/mol", self.value_kj_per_mol)
     }
 }
+
+// Work Function from Frequency
+// Uses the formula E = hν, where
+    // E is the energy (J)
+    // h is Planck's constant (J*s)
+    // ν is the frequency (Hz)
+impl From<Frequency> for WorkFunction {
+    fn from(frequency: Frequency) -> Self {
+        Self {
+            value_kj_per_mol: frequency.value_hz * PLANCK,
+        }
+    }
+}
