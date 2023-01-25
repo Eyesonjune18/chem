@@ -3,6 +3,7 @@ use std::fmt::{Display, Formatter, Result};
 use crate::readers::*;
 use crate::constants::*;
 
+// Frequency value in Hz
 pub struct Frequency {
     pub value_hz: f64,
 }
@@ -47,6 +48,19 @@ impl From<Energy> for Frequency {
     }
 }
 
+// Frequency from Work Function
+// ? Is this the right formula?
+// Uses formula E = hν, where
+    // E is the energy (J)
+    // h is Planck's constant (J*s)
+    // ν is the frequency (Hz)
+impl From<WorkFunction> for Frequency {
+    fn from(work_function: WorkFunction) -> Self {
+        Self::from(Energy::from(work_function))
+    }
+}
+
+// Wavelength value in m
 pub struct Wavelength {
     pub value_m: f64,
 }
@@ -93,6 +107,22 @@ impl From<Energy> for Wavelength {
     }
 }
 
+// Wavelength from Work Function
+// ? Is this the right formula?
+// First, uses the formula E = hν, where
+    // E is the energy (J)
+    // h is Planck's constant (J*s)
+    // ν is the frequency (Hz)
+// Then, uses the formula c = λν, where
+    // c is the speed of light (m/s)
+    // λ is the wavelength (m)
+    // ν is the frequency (Hz)
+impl From<WorkFunction> for Wavelength {
+    fn from(work_function: WorkFunction) -> Self {
+        Self::from(Energy::from(work_function))
+    }
+}
+
 pub struct Energy {
     pub value_j: f64,
 }
@@ -136,5 +166,36 @@ impl From<Frequency> for Energy {
 impl From<Wavelength> for Energy {
     fn from(wavelength: Wavelength) -> Self {
         Self::from(Frequency::from(wavelength))
+    }
+}
+
+// Energy from Work Function
+// * Converts kJ/mol to J/photon
+// ! Not sure what formula this uses
+// ! Also not sure if this is really a conversion from work function to energy
+impl From<WorkFunction> for Energy {
+    fn from(work_function: WorkFunction) -> Self {
+        Self {
+            value_j: (work_function.value_kj_per_mol * 1000.0) / AVOGADRO,
+        }
+    }
+}
+
+// Work function in kJ/mol
+pub struct WorkFunction {
+    pub value_kj_per_mol: f64,
+}
+
+impl WorkFunction {
+    pub fn prompt() -> Self {
+        Self {
+            value_kj_per_mol: read_f64("Enter the work function (in kJ/mol): "),
+        }
+    }
+}
+
+impl Display for WorkFunction {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+        write!(f, "Work function: {} kJ/mol", self.value_kj_per_mol)
     }
 }

@@ -8,7 +8,6 @@ pub fn calculate_electronic_transition_energy(n: i32, m: i32) -> f64 {
 }
 
 // Given a work function (in kJ/mol), calculates the threshold frequency of a photoelectric effect
-// ? Should this be done with work -> energy -> frequency chain?
 pub fn calculate_threshold_frequency(w: f64) -> f64 {
     // Convert to energy (J/photon)
     let e = (w * 1000.0) / AVOGADRO;

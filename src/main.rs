@@ -24,6 +24,8 @@ fn main() {
 
     // ! Significant figures???
     println!("{}", match choice {
+        2 => Frequency::from(WorkFunction::prompt()).to_string(),
+        3 => Wavelength::from(WorkFunction::prompt()).to_string(),
         5 => Wavelength::from(Frequency::prompt()).to_string(),
         6 => Frequency::from(Wavelength::prompt()).to_string(),
         7 => Energy::from(Frequency::prompt()).to_string(),
