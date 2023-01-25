@@ -1,5 +1,3 @@
-#![allow(dead_code)]
-
 mod constants;
 mod equations;
 
@@ -9,6 +7,7 @@ use equations::{
     calculate_electronic_transition_energy,
     calculate_frequency_from_wavelength,
     calculate_threshold_frequency,
+    calculate_threshold_wavelength,
     calculate_wavelength_from_frequency,
     calculate_work_function,
     calculate_energy_from_frequency,
@@ -19,22 +18,24 @@ fn main() {
     // Give the user a menu of calculations to choose from
     println!("1. Calculate energy release from electronic transition");
     println!("2. Calculate threshold frequency from work function");
-    println!("3. Calculate work function from threshold frequency");
-    println!("4. Calculate wavelength from frequency");
-    println!("5. Calculate frequency from wavelength");
-    println!("6. Calculate energy from frequency");
-    println!("7. Calculate energy from wavelength");
+    println!("3. Calculate threshold wavelength from work function");
+    println!("4. Calculate work function from threshold frequency");
+    println!("5. Calculate wavelength from frequency");
+    println!("6. Calculate frequency from wavelength");
+    println!("7. Calculate energy from frequency");
+    println!("8. Calculate energy from wavelength");
 
     let choice = read_i32("Enter selection: ");
 
     match choice {
         1 => prompt_electronic_transition_energy(),
         2 => prompt_threshold_frequency(),
-        3 => prompt_work_function(),
-        4 => prompt_wavelength_from_frequency(),
-        5 => prompt_frequency_from_wavelength(),
-        6 => prompt_energy_from_frequency(),
-        7 => prompt_energy_from_wavelength(),
+        3 => prompt_threshold_wavelength(),
+        4 => prompt_work_function(),
+        5 => prompt_wavelength_from_frequency(),
+        6 => prompt_frequency_from_wavelength(),
+        7 => prompt_energy_from_frequency(),
+        8 => prompt_energy_from_wavelength(),
         _ => println!("Invalid choice!"),
     }
 }
@@ -50,13 +51,21 @@ fn prompt_electronic_transition_energy() {
 }
 
 fn prompt_threshold_frequency() {
-    // ! Is this unit correct?
-    let work_function = read_f64("Enter the work function (in J/mol): ");
+    let work_function = read_f64("Enter the work function (in kJ/mol): ");
     let significant_figures = prompt_sigfigs();
 
     let threshold_frequency = calculate_threshold_frequency(work_function);
 
     println!("The threshold frequency is {:.1$e} Hz", threshold_frequency, significant_figures);
+}
+
+fn prompt_threshold_wavelength() {
+    let work_function = read_f64("Enter the work function (in kJ/mol): ");
+    let significant_figures = prompt_sigfigs();
+
+    let threshold_wavelength = calculate_threshold_wavelength(work_function);
+
+    println!("The threshold wavelength is {:.1$e} m", threshold_wavelength, significant_figures);
 }
 
 fn prompt_work_function() {
