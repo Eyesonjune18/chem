@@ -1,4 +1,4 @@
-use crate::constants::{RYDBERG, PLANCK, SPEED_OF_LIGHT, AVOGADRO};
+use crate::constants::*;
 
 // TODO: Use unicode names for variables
 
@@ -23,30 +23,10 @@ pub fn calculate_threshold_wavelength(w: f64) -> f64 {
     let ν = calculate_threshold_frequency(w);
 
     // Convert frequency (Hz) to wavelength (m)
-    calculate_wavelength_from_frequency(ν)
+    unimplemented!()
 }
 
 // Given a threshold frequency (in Hz), calculates the work function of a photoelectric effect
 pub fn calculate_work_function(ν: f64) -> f64 {
     ν * PLANCK
-}
-
-// Given a frequency (in Hz), calculates the wavelength (in m)
-pub fn calculate_wavelength_from_frequency(ν: f64) -> f64 {
-    SPEED_OF_LIGHT / ν
-}
-
-// Given a wavelength (in m), calculates the frequency (in Hz)
-pub fn calculate_frequency_from_wavelength(λ: f64) -> f64 {
-    SPEED_OF_LIGHT / λ
-}
-
-// Given a frequency (in Hz), calculates the energy (in J)
-pub fn calculate_energy_from_frequency(ν: f64) -> f64 {
-    PLANCK * ν
-}
-
-// Given a wavelength (in m), calculates the energy (in J)
-pub fn calculate_energy_from_wavelength(λ: f64) -> f64 {
-    PLANCK * SPEED_OF_LIGHT / λ
 }
