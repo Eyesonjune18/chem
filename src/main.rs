@@ -2,11 +2,11 @@
 #![allow(mixed_script_confusables)]
 
 mod constants;
-mod measurement_types;
+mod measurements;
 mod readers;
 
 use readers::*;
-use measurement_types::*;
+use measurements::*;
 
 fn main() {
     // Give the user a menu of calculations to choose from
