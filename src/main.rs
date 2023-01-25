@@ -11,14 +11,14 @@ use measurement_types::*;
 
 fn main() {
     // Give the user a menu of calculations to choose from
-    println!("1. Calculate energy release from electronic transition");
-    println!("2. Calculate threshold frequency from work function");
-    println!("3. Calculate threshold wavelength from work function");
-    println!("4. Calculate work function from threshold frequency");
-    println!("5. Frequency -> Wavelength");
-    println!("6. Wavelength -> Frequency");
-    println!("7. Frequency -> Energy");
-    println!("8. Wavelength -> Energy");
+    // println!("1. Calculate energy release from electronic transition");
+    println!("2. Work Function          -> Threshold Frequency");
+    println!("3. Work Function          -> Threshold Wavelength");
+    println!("4. Threshold Frequency    -> Work Function");
+    println!("5. Frequency              -> Wavelength");
+    println!("6. Wavelength             -> Frequency");
+    println!("7. Frequency              -> Energy");
+    println!("8. Wavelength             -> Energy");
 
     let choice = read_i32("Enter selection: ");
 
