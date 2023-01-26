@@ -10,7 +10,8 @@ use measurements::*;
 
 fn main() {
     // Give the user a menu of calculations to choose from
-    // println!("1. Calculate energy release from electronic transition");
+    // ? How should I denote this?
+    println!("1. Electronic Transition  -> Energy Release");
     println!("2. Work Function          -> Threshold Frequency");
     println!("3. Work Function          -> Threshold Wavelength");
     println!("4. Threshold Frequency    -> Work Function");
@@ -22,6 +23,7 @@ fn main() {
     let choice = read_i32("Enter menu selection: ");
 
     println!("{}", match choice {
+        1 => calculate_electronic_transition_energy(),
         2 => Frequency::from(WorkFunction::prompt()).to_string(),
         3 => Wavelength::from(WorkFunction::prompt()).to_string(),
         4 => WorkFunction::from(Frequency::prompt()).to_string(),
@@ -33,17 +35,14 @@ fn main() {
     });
 }
 
-// fn prompt_electronic_transition_energy() {
-//     let n = read_i32("Enter the first energy level (n): ");
-//     let m = read_i32("Enter the second energy level (m): ");
-//     let significant_figures = prompt_sigfigs();
+// ! Not sure how best to do this
+// Given two electron energy levels (n and m), calculates the energy released (in J)
+pub fn calculate_electronic_transition_energy() -> String {
+    let n = read_i32("Enter the first energy level (n): ");
+    let m = read_i32("Enter the second energy level (m): ");
+    let significant_figures = prompt_sigfigs();
 
-//     let energy_difference = calculate_electronic_transition_energy(n, m);
+    let energy_release = constants::RYDBERG * (1.0 / (n * n) as f64 - 1.0 / (m * m) as f64);
 
-//     println!("The energy difference between the two energy levels is {:.1$e} J", energy_difference, significant_figures);
-// }
-
-// // Given two electron energy levels (n and m), calculates the energy released (in J)
-// pub fn calculate_electronic_transition_energy(n: i32, m: i32) -> f64 {
-//     constants::RYDBERG * (1.0 / (n * n) as f64 - 1.0 / (m * m) as f64)
-// }
+    format!("The energy released is {:.1$e} J", energy_release, significant_figures)
+}
