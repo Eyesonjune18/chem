@@ -9,8 +9,13 @@ use readers::*;
 use measurements::*;
 
 fn main() {
+    // // * This is temporary
+    // loop {
+	//     println!("{}", Wavelength::from(Energy::from(WorkFunction::prompt())));
+    // }
+
     // Give the user a menu of calculations to choose from
-    // ? How should I denote this?
+    // ? How should I denote this first one?
     println!("1. Electronic Transition  -> Energy Release");
     println!("2. Work Function          -> Threshold Frequency");
     println!("3. Work Function          -> Threshold Wavelength");

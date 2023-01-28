@@ -81,7 +81,9 @@ impl Wavelength {
 
 impl Display for Wavelength {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-        write!(f, "Wavelength: {:.1$e} m", self.value_m, self.significant_figures)
+        write!(f, "Wavelength: {:.1$e} meters\n", self.value_m, self.significant_figures)?;
+        write!(f, "            {:.1$e} millimeters\n", self.value_m * 1e3, self.significant_figures)?;
+        write!(f, "            {:.1$e} nanometers", self.value_m * 1e9, self.significant_figures)
     }
 }
 
@@ -110,7 +112,11 @@ impl From<Frequency> for Wavelength {
     // ν is the frequency (Hz)
 impl From<Energy> for Wavelength {
     fn from(energy: Energy) -> Self {
-        Self::from(Frequency::from(energy))
+        // ! CHECK FREQUENCY FROM ENERGY
+        Self {
+            value_m: (PLANCK * SPEED_OF_LIGHT) / energy.value_j,
+            significant_figures: energy.significant_figures,
+        }
     }
 }
 
