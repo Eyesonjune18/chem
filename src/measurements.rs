@@ -46,18 +46,14 @@ impl From<Wavelength> for Frequency {
 impl From<Energy> for Frequency {
     fn from(energy: Energy) -> Self {
         Self {
-            value_hz: energy.value_j / PLANCK,
+            value_hz: energy.value_j_photon / PLANCK,
             significant_figures: energy.significant_figures,
         }
     }
 }
 
 // Frequency from Work Function
-// ? Is this the right formula?
-// Uses formula E = hν, where
-    // E is the energy (J)
-    // h is Planck's constant (J*s)
-    // ν is the frequency (Hz)
+// For formulas used, see Energy from Work Function, then Frequency from Energy
 impl From<WorkFunction> for Frequency {
     fn from(work_function: WorkFunction) -> Self {
         Self::from(Energy::from(work_function))
@@ -113,23 +109,16 @@ impl From<Frequency> for Wavelength {
 impl From<Energy> for Wavelength {
     fn from(energy: Energy) -> Self {
         // ! CHECK FREQUENCY FROM ENERGY
+        // ? What did I write the above comment for?
         Self {
-            value_m: (PLANCK * SPEED_OF_LIGHT) / energy.value_j,
+            value_m: (PLANCK * SPEED_OF_LIGHT) / energy.value_j_photon,
             significant_figures: energy.significant_figures,
         }
     }
 }
 
 // Wavelength from Work Function
-// ? Is this the right formula?
-// First, uses the formula E = hν, where
-    // E is the energy (J)
-    // h is Planck's constant (J*s)
-    // ν is the frequency (Hz)
-// Then, uses the formula c = λν, where
-    // c is the speed of light (m/s)
-    // λ is the wavelength (m)
-    // ν is the frequency (Hz)
+// For formulas used, see Energy from Work Function, then Wavelength from Energy
 impl From<WorkFunction> for Wavelength {
     fn from(work_function: WorkFunction) -> Self {
         Self::from(Energy::from(work_function))
@@ -137,22 +126,29 @@ impl From<WorkFunction> for Wavelength {
 }
 
 pub struct Energy {
-    pub value_j: f64,
+    pub value_j_photon: f64,
     significant_figures: usize,
 }
 
 impl Energy {
     pub fn prompt() -> Self {
         Self {
-            value_j: read_f64("Enter the energy (in J): "),
+            value_j_photon: read_f64("Enter the energy (in J/photon): "),
             significant_figures: prompt_sigfigs(),
         }
+    }
+
+    // Convert J/photon to kJ/mol
+    // * Does this need to be a method?
+    fn to_kj_mol(&self) -> f64 {
+        self.value_j_photon / 1000.0 * AVOGADRO
     }
 }
 
 impl Display for Energy {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-        write!(f, "Energy: {:.1$e} J", self.value_j, self.significant_figures)
+        write!(f, "Energy: {:.1$e} J/photon\n", self.value_j_photon, self.significant_figures)?;
+        write!(f, "        {:.1$e} kJ/mol", self.to_kj_mol(), self.significant_figures)
     }
 }
 
@@ -164,7 +160,7 @@ impl Display for Energy {
 impl From<Frequency> for Energy {
     fn from(frequency: Frequency) -> Self {
         Self {
-            value_j: frequency.value_hz * PLANCK,
+            value_j_photon: frequency.value_hz * PLANCK,
             significant_figures: frequency.significant_figures,
         }
     }
@@ -186,13 +182,11 @@ impl From<Wavelength> for Energy {
 }
 
 // Energy from Work Function
-// * Converts kJ/mol to J/photon
-// ! Not sure what formula this uses
-// ! Also not sure if this is really a conversion from work function to energy
+// Uses conversion factor for kJ to J, and /mol to /photon
 impl From<WorkFunction> for Energy {
     fn from(work_function: WorkFunction) -> Self {
         Self {
-            value_j: (work_function.value_kj_per_mol * 1000.0) / AVOGADRO,
+            value_j_photon: (work_function.value_kj_per_mol * 1000.0) / AVOGADRO,
             significant_figures: work_function.significant_figures,
         }
     }
