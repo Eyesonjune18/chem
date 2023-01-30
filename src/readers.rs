@@ -16,6 +16,10 @@ pub fn read_f64(prompt: &str) -> f64 {
     prompt_string(prompt).parse().expect("Please type a number!")
 }
 
+pub fn read_string(prompt: &str) -> String {
+    prompt_string(prompt)
+}
+
 fn prompt_string(prompt: &str) -> String {
     print!("{}", prompt);
     stdout().flush().expect("Failed to flush stdout");
