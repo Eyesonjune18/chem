@@ -176,23 +176,40 @@ fn get_electron_configuration(element: &str) -> Option<String> {
         }
     }
 
-    let mut electrons_remaining = constants::atomic_number(element).expect("Invalid element used");
-    let mut energy_levels: Vec<EnergyLevel> = Vec::new();
-    let mut n = 1;
-
-    while electrons_remaining > 0 {
-        energy_levels.push(EnergyLevel::new(n, &mut electrons_remaining));
-        n += 1;
+    struct ElectronConfiguration {
+        energy_levels: Vec<EnergyLevel>,
     }
 
-    let mut electron_configuration = String::new();
+    impl ElectronConfiguration {
+        fn new(element: &str) -> Self {
+            let mut electrons_remaining = constants::atomic_number(element).expect("Invalid element used");
+            let mut energy_levels: Vec<EnergyLevel> = Vec::new();
+            let mut n = 1;
 
-    for energy_level in energy_levels {
-        electron_configuration.push_str(&format!("{}", energy_level));
+            while electrons_remaining > 0 {
+                energy_levels.push(EnergyLevel::new(n, &mut electrons_remaining));
+                n += 1;
+            }
+
+            Self {
+                energy_levels,
+            }
+        }
     }
 
-    // Remove the trailing space and return
-    Some(electron_configuration.trim().to_string())
+    impl Display for ElectronConfiguration {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+            let mut output = String::new();
+
+            for energy_level in &self.energy_levels {
+                output.push_str(&format!("{}", energy_level));
+            }
+
+            write!(f, "{}", output.trim())
+        }
+    }
+
+    Some(format!("{}", ElectronConfiguration::new(element)))
 }
 
 #[cfg(test)]
