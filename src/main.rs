@@ -164,18 +164,19 @@ fn get_electron_configuration(element: &str) -> Option<String> {
 
     impl Display for EnergyLevel {
         fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-            let mut output = String::new();
+            let mut shell_strings = Vec::new();
 
             for shell in &self.shells {
                 if shell.electrons > 0 {
-                    output.push_str(&format!("{}{} ", self.n, shell));
+                    shell_strings.push(format!("{}{}", self.n, shell));
                 }
             }
 
-            write!(f, "{}", output)
+            write!(f, "{}", shell_strings.join(" "))
         }
     }
 
+    // Represents all the energy levels in an element's ground state
     struct ElectronConfiguration {
         energy_levels: Vec<EnergyLevel>,
     }
@@ -199,13 +200,13 @@ fn get_electron_configuration(element: &str) -> Option<String> {
 
     impl Display for ElectronConfiguration {
         fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-            let mut output = String::new();
+            let mut energy_level_strings = Vec::new();
 
             for energy_level in &self.energy_levels {
-                output.push_str(&format!("{}", energy_level));
+                energy_level_strings.push(format!("{}", energy_level));
             }
 
-            write!(f, "{}", output.trim())
+            write!(f, "{}", energy_level_strings.join(" "))
         }
     }
 
